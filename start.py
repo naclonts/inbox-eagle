@@ -1,5 +1,5 @@
 
-from evaluator.evaluator import get_important_messages
+from evaluator.evaluator import evaluate_message_importance
 from mail_client.get_mail import list_unread_messages
 
 
@@ -14,12 +14,10 @@ def start():
         for message in messages:
             print(f"Message ID: {message['id']} - Subject: {message['subject']}")
             print(f"^-- Snippet: {message['snippet']}")
+            evaluation = evaluate_message_importance(message)
+            print(evaluation)
+            print('\n----------------\n')
     
-
-    # Determine which ones are important to respond to
-    important_messages = get_important_messages(messages)
-    print(important_messages)
-
 
 
 

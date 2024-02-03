@@ -1,3 +1,5 @@
 .env
+.environment
 credentials.json
 *.pickle
+__pycache__
