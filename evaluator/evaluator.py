@@ -7,7 +7,7 @@ import requests
 
 load_dotenv('.environment')
 
-EVALUATOR_MODEL = 'gpt-3.5-turbo'
+EVALUATOR_MODEL = 'local'
 openai.api_key = os.environ['OPENAI_API_KEY']
 
 
