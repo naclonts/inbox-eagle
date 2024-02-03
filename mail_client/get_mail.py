@@ -52,31 +52,31 @@ def list_unread_messages() -> list[Message]:
 
     # return full messages
     return [
-        get_mime_message(service, 'me', message['id'])
+        get_decoded_message(service, 'me', message['id'])
         for message in messages
     ]
 
 
-def get_mime_message(service, user_id, msg_id) -> Message:
-    try:
-        message = service.users().messages().get(userId=user_id, id=msg_id, format='full').execute()
+def get_decoded_message(service, user_id, msg_id) -> Message:
+    message = service.users().messages().get(userId=user_id, id=msg_id, format='full').execute()
 
-        # Check if the message is multipart
-        payload = message['payload']
-        parts = payload.get('parts')
+    # Check if the message is multipart
+    payload = message['payload']
+    headers = payload['headers']
+    parts = payload.get('parts')
 
-        body = ""
-        if parts:  # If email has parts, iterate through them
-            for part in parts:
-                if part['mimeType'] == 'text/plain' or part['mimeType'] == 'text/html':
-                    body_data = part['body']['data']
-                    body = str(base64.urlsafe_b64decode(body_data), 'utf-8')  # Decode the base64 encoded string
-                    break  # Assuming you want the first text/plain or text/html part you encounter
-        else:  # Simple email, not multipart
-            body_data = payload['body']['data']
-            body = str(base64.urlsafe_b64decode(body_data), 'utf-8')
+    body = ""
+    if parts:  # If email has parts, iterate through them
+        for part in parts:
+            if part['mimeType'] == 'text/plain' or part['mimeType'] == 'text/html':
+                body_data = part['body']['data']
+                body = str(base64.urlsafe_b64decode(body_data), 'utf-8')  # Decode the base64 encoded string
+                subject= [i['value'] for i in headers if i["name"]=="Subject"]
+                break  # Assuming you want the first text/plain or text/html part you encounter
+    else:  # Simple email, not multipart
+        body_data = payload['body']['data']
+        body = str(base64.urlsafe_b64decode(body_data), 'utf-8')
+        subject= [i['value'] for i in headers if i["name"]=="Subject"]
 
-        return { 'body': body, 'snippet': message['snippet'], 'id': message['id'], 'subject': message['payload']['headers'][16]['value'] }
-    except errors.HttpError as error:
-        print(f'An error occurred: {error}')
+    return { 'body': body, 'snippet': message['snippet'], 'id': message['id'], 'subject': subject }
 
