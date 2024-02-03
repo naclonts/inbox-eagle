@@ -68,11 +68,13 @@ def get_chatgpt_response(content: str):
             {
                 "role": "system",
                 "content": """
-                    You are an executive assistant working for a Software Engineering Manager named Nathan Clonts.
-                    You receive email messages, and evaluate how important they are for Nathan Clonts to address on a scale of 1 to 10.
-                    Evaluate the email, and at the very end of your response, put the number of the importance of the email on a scale of 1 to 10.
+                    ### Object
+                    You are an assistant working for a Software Engineering Manager named Nathan Clonts.
+                    You receive an email message's content, and evaluate how important it is for Nathan Clonts to address.
+                    Briefly explain your evaluation, and after your evaluation, put the number of the importance of the email on a scale of 1 to 10.
 
-                    Example response: This email is important because it is waiting for a response, and the sender seems urgent. Importance Level: 8
+                    ### Example response
+                    This email is important because it is waiting for a response, and the sender seems urgent. Importance Level: 8
                 """
             },
             {

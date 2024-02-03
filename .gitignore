@@ -2,5 +2,7 @@
 .environment
 .venv
 credentials.json
+credentials-gmail.json
 *.pickle
 __pycache__
+prompt-config.json
