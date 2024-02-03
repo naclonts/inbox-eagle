@@ -1,5 +1,6 @@
 import base64
 from distutils import errors
+from typing import TypedDict
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
@@ -32,7 +33,15 @@ def get_gmail_service():
     service = build('gmail', 'v1', credentials=creds)
     return service
 
-def list_unread_messages():
+Message = TypedDict('Message', {
+    'body': str,
+    'snippet': str,
+    'id': str,
+    'subject': str
+})
+
+
+def list_unread_messages() -> list[Message]:
     service = get_gmail_service()
 
     # Fetch unread inbox in the last 20 days
@@ -48,7 +57,7 @@ def list_unread_messages():
     ]
 
 
-def get_mime_message(service, user_id, msg_id):
+def get_mime_message(service, user_id, msg_id) -> Message:
     try:
         message = service.users().messages().get(userId=user_id, id=msg_id, format='full').execute()
         
@@ -70,3 +79,4 @@ def get_mime_message(service, user_id, msg_id):
         return { 'body': body, 'snippet': message['snippet'], 'id': message['id'], 'subject': message['payload']['headers'][16]['value'] }
     except errors.HttpError as error:
         print(f'An error occurred: {error}')
+
