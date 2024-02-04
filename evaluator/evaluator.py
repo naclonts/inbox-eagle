@@ -76,4 +76,4 @@ def get_chatgpt_response(prompt_config, prompt):
         messages=prompt,
         model=prompt_config['evaluator_model'],
     )
-    return chat_completion
+    return chat_completion.model_dump()
