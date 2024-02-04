@@ -3,5 +3,6 @@
     "my_role": "Software Engineer with the Platforms team",
     "company_name": "Acme Logistics",
     "company_description": "A logistics company that moves a lot of freight in trucks, trains, planes, and boats.",
-    "evaluator_model": "gpt-3.5-turbo"
+    // "evaluator_model": "gpt-3.5-turbo"
+    "evaluator_model": "local"
 }
