@@ -19,8 +19,8 @@ def get_message_evaluation_prompt(prompt_config, message_content: str) -> str:
                 ### Example responses:
 
                 We are waiting on a response from {prompt_config['full_name']}, and we can't continue work on our end until then. Importance Level: 8
-
-                This is an update on world news, covering news related to your industry. Importance Level: 2
+                This is an update on world news, covering news related to your industry. Importance Level: 3
+                Your payment for Kaleidoscope Digital Services has been received. Importance Level: 5
             """
         },
         {

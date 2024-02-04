@@ -1,6 +1,7 @@
 import json
 from evaluator.evaluator import evaluate_message_importance
 from mail_client.get_mail import list_unread_messages
+import commentjson
 
 
 def start():
@@ -13,15 +14,16 @@ def start():
 
     # Assuming the settings are stored in settings.json
     with open('prompt-config.json', 'r') as file:
-        prompt_config = json.load(file)
+        prompt_config = commentjson.load(file)
 
-    print(f'\n\n-------- Unread messages ({len(messages)}) --------\n')
+    print(f'\n\n-------- Evaluating messages ({len(messages)}) --------\n')
     for message in messages:
         # Print message in green
         print('\033[92m' + f"Message ID: {message['id']} - Subject: {message['subject']}" + '\033[0m')
-        print(f"^-- Snippet: {message['snippet']}")
+        print(f"Snippet: {message['snippet']}")
         evaluation = evaluate_message_importance(prompt_config, message)
-        print(evaluation)
+        print(f'Rating: {evaluation["rating"]}')
+        print(f'Evaluation: {evaluation["response"]}')
         print('\n----------------\n')
 
 
