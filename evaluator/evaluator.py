@@ -28,7 +28,7 @@ MessageEvaluation = TypedDict('MessageEvaluation', {
 
 def evaluate_message_importance(prompt_config, message: Message) -> MessageEvaluation:
     # limit the message to the first and last 2000 characters
-    trimmed_content = message['body'][:2000] + '\n...\n' + message['body'][-2000:]
+    trimmed_content = message['body'][:2000] + '\n...\n' + message['body'][-2000:] + '\n...\nSnippet: ' + message['snippet']
     prompt = prompt_writer.get_message_evaluation_prompt(prompt_config, trimmed_content)
 
     if prompt_config['evaluator_model'] == 'local':
