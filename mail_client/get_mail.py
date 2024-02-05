@@ -44,7 +44,7 @@ Message = TypedDict('Message', {
 def list_unread_messages() -> list[Message]:
     service = get_gmail_service()
 
-    # Fetch unread inbox in the last 20 days
+    # Fetch unread inbox in the last N days
     results = service.users().messages() \
         .list(userId='me', labelIds=['INBOX', 'UNREAD'], q='newer_than:7d') \
         .execute()
