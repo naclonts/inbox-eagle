@@ -1,3 +1,4 @@
+from datetime import datetime
 from evaluator.evaluator import MessageEvaluation, evaluate_message_importance
 from mail_client.get_mail import list_unread_messages
 import commentjson
@@ -35,7 +36,8 @@ def start():
     print('\n\n-------- Finished evaluating messages --------\n')
 
     # Save evaluations to CSV file
-    with open('evaluation-results.csv', 'w') as file:
+    filename = f'evaluation-results-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.csv'
+    with open(filename, 'w') as file:
         # format MessageEvaluation objects to CSV
         csv = 'Rating,Message Subject,Message Content,Evaluation,Model\n'
         # double quote values to avoid issues with commas
@@ -43,7 +45,7 @@ def start():
             csv += f'"{evaluation["rating"]}", "{evaluation["message"]["subject"]}", "{evaluation["response"]}", "{evaluation["model"]}"\n'
         file.write(csv)
 
-    print(f'Evaluation results saved to evaluation-results.csv')
+    print(f'Evaluation results saved to {filename}')
 
 
 if __name__ == '__main__':
