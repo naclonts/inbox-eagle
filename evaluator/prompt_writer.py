@@ -1,5 +1,5 @@
 
-def get_message_evaluation_prompt(prompt_config, message_content: str) -> str:
+def get_message_evaluation_prompt(prompt_config, message_content: str):
     """
     Returns a prompt with a series of messages with role + content.
     """
@@ -27,5 +27,25 @@ def get_message_evaluation_prompt(prompt_config, message_content: str) -> str:
         {
             "role": "user",
             "content": message_content,
+        }
+    ]
+
+
+def get_rating_extraction_prompt(prompt_config, evaluation_content: str):
+    """Returns a prompt that asks the LLM to extract the numeric evaluation rating."""
+    return [
+        {
+            "role": "system",
+            "content": f"""
+                Take the importance level from the evaluation and put it at the very end of your response.
+                Return only the number, and do not add any text, words, or punctuation.
+
+                Example input: This message is fairly important, so I assigned it an 8.0 importance level.
+                Example responses: 8.0
+            """
+        },
+        {
+            "role": "user",
+            "content": evaluation_content,
         }
     ]
