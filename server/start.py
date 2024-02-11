@@ -1,11 +1,13 @@
 import commentjson
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from evaluator.evaluator import evaluate_message_importance
 from evaluator.types import MessageEvaluation
 
 from mail_client.get_mail import list_unread_messages
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello():
@@ -18,14 +20,16 @@ def get_email_evaluations():
     # Extracting values from the JSON object
     # TODO: use these parameters!
     num_days_to_include = data.get('numDaysToInclude', 3)
-    email_type_filter = data.get('emailTypeFilter', ['UNREAD'])
+    email_type_filter = data.get('emailTypeFilter', ['INBOX', 'UNREAD'])
 
     # get unread emails
-    messages = list_unread_messages()
+    messages = list_unread_messages(num_days_to_include, email_type_filter)
 
     if not messages:
         print('\n\n- No unread messages found -\n\n')
-        return
+        return jsonify({
+            'evaluations': []
+        })
 
     # Open the config file to get context and settings
     with open('prompt-config.json', 'r') as file:
@@ -50,9 +54,10 @@ def get_email_evaluations():
 
     print('\n\n-------- Finished evaluating messages --------\n')
 
-    return jsonify({
+    response = jsonify({
         'evaluations': evaluations
     })
+    return response
 
 
 def start_server():

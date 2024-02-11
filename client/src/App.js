@@ -7,6 +7,20 @@ const InboxEagle = () => {
   const handleEvaluateClick = () => {
     // Placeholder for actual evaluation logic
     console.log('Evaluating emails from the last', days, 'days');
+    fetch('http://localhost:5020/get-email-evaluations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ numDaysToInclude: days })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Received email evaluations:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   return (
