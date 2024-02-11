@@ -35,7 +35,7 @@ const InboxEagle = () => {
   return (
     <div className="inbox-eagle">
       <div className="header">
-        <img src="eagle-logo.png" alt="Inbox Eagle Logo" />
+        <img src="eagle-logo.png" alt="Inbox Eagle Logo" className="logo-image" />
         <h1>Inbox Eagle</h1>
       </div>
       <div className="filter">

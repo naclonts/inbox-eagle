@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Inbox Eagle",
+  "name": "A tool that helps you prioritize your inbox",
   "icons": [
     {
       "src": "favicon.ico",
