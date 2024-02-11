@@ -55,7 +55,16 @@ def get_email_evaluations():
     print('\n\n-------- Finished evaluating messages --------\n')
 
     response = jsonify({
-        'evaluations': evaluations
+        'evaluations': [
+            {
+                "rating": eval['rating'],
+                "subject": eval['message']['subject'],
+                "snippet": eval['message']['snippet'],
+                "evaluatorResponse": eval['response'],
+                "model": eval['model'],
+                "receivedAt": eval['message']['receivedAt']
+            } for eval in evaluations
+        ]
     })
     return response
 

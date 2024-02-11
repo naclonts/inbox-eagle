@@ -37,7 +37,8 @@ Message = TypedDict('Message', {
     'body': str,
     'snippet': str,
     'id': str,
-    'subject': str
+    'subject': str,
+    'receivedAt': str
 })
 
 
@@ -82,5 +83,11 @@ def get_decoded_message(service, user_id, msg_id) -> Message:
         body_data = payload['body'].get('data', '')
         body = str(base64.urlsafe_b64decode(body_data), 'utf-8')
 
-    return { 'body': body, 'snippet': message['snippet'], 'id': message['id'], 'subject': subject or '' }
+    return {
+        'body': body,
+        'snippet': message['snippet'],
+        'id': message['id'],
+        'subject': subject or '',
+        'receivedAt': message['internalDate']
+    }
 

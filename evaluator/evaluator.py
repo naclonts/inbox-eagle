@@ -1,6 +1,6 @@
 import re
 from evaluator import prompt_writer
-from mailbox import Message
+from mail_client.get_mail import Message
 from evaluator.extract_evaluator_rating import extract_rating_from_evaluation
 from evaluator.types import MessageEvaluation
 
