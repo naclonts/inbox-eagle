@@ -1,6 +1,6 @@
 # Inbox Eagle
 
-A script that queries your emails and ranks them in importance based on which ones need a reply from you.
+An app that queries your emails and ranks them in importance based on which ones need a reply from you.
 
 Configurable to use either a local LLM or an OpenAI API model.
 
@@ -10,12 +10,22 @@ Configurable to use either a local LLM or an OpenAI API model.
 2. `cp prompt-config.example.json prompt-config.json`
 3. Set up GMail API credentials, and place the credentials JSON in this directory named `credentials-gmail.json`.
 4. `pip install -r requirements.txt`
+5. `cd client && npm ci`
 
 ## Running the script
 
-`$ python start.py`
+Run the server:
 
-The script currently evaluates unread emails received within the last X days.
+```sh
+$ python start.py
+```
+
+Also run the client:
+
+```sh
+$ cd client
+$ npm start
+```
 
 Example output:
 
