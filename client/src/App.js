@@ -64,22 +64,22 @@ const InboxEagle = () => {
             : <table className="emails">
               <thead>
                 <tr>
-                  <th>Received date</th>
                   <th>Rating</th>
+                  <th>Received date</th>
                   <th>Subject</th>
-                  <th>Evaluation</th>
                   <th>Snippet</th>
+                  <th>Evaluation</th>
                 </tr>
               </thead>
               <tbody>
                 {/* list each evaluation */}
                 {emailEvaluations.map((evaluation, index) => (
                   <tr key={index}>
-                    <td>{evaluation.receivedAt ? new Date(Number(evaluation.receivedAt)).toLocaleDateString() : ''}</td>
                     <td>{evaluation.rating}</td>
+                    <td>{evaluation.receivedAt ? new Date(Number(evaluation.receivedAt)).toLocaleDateString() : ''}</td>
                     <td>{evaluation.subject}</td>
-                    <td>{evaluation.evaluatorResponse}</td>
                     <td>{evaluation.snippet}</td>
+                    <td>{evaluation.evaluatorResponse}</td>
                   </tr>
                 ))}
               </tbody>
