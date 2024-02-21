@@ -14,7 +14,7 @@ Configurable to use either a local LLM or an OpenAI API model.
 
 ## Running the script
 
-Start by running the command line script to authorize Gmail:
+Start by running the command line script to authorize Gmail and test the evaluation process:
 
 ```
 $ python run_script.py
