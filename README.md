@@ -1,6 +1,6 @@
 # Inbox Eagle
 
-An app that queries your emails and ranks them in importance based on which ones need a reply from you.
+An app that queries your unread emails and ranks them in importance based on which ones need a reply from you.
 
 Configurable to use either a local LLM or an OpenAI API model.
 
