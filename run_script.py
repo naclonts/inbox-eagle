@@ -6,7 +6,7 @@ import commentjson
 
 def start():
     # get unread emails
-    messages = list_unread_messages(7, ['INBOX', 'UNREAD'])
+    messages = list_unread_messages(1, ['INBOX', 'UNREAD'])
 
     if not messages:
         print('\n\n- No unread messages found -\n\n')
