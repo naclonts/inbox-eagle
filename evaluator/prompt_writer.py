@@ -3,24 +3,24 @@ def get_message_evaluation_prompt(prompt_config, message_content: str):
     """
     Returns a prompt with a series of messages with role + content.
     """
+
     return [
         {
             "role": "system",
             "content": f"""
                 ### Objective:
                 You are an executive assistant working for me, a person named {prompt_config['full_name']} who is a {prompt_config['my_role']}.
-                I work at {prompt_config['company_name']}, which is: {prompt_config['company_description']} .
-                You receive email messages, and evaluate how important they are for {prompt_config['full_name']} to address on a scale of 1 to 10.
-                Summarize and evaluate the email, and at the end of your response, put the number of the importance of the email on a scale of 1 to 10.
-                Emails are more important if they are urgent, or addressed to me and expecting a response.
+                {get_company_clause(prompt_config)}
 
-                ### Example responses:
+                You receive email messages, and evaluate how important they are for {prompt_config['full_name']} on a scale of 1 to 10.
+                Summarize and evaluate the email, listing any specific facts that are important. Ignore irrelevant information such as unsubscribe links.
+                At the end of your response, put the number of the importance of the email on a scale of 1 to 10.
+                {get_rating_criteria_clause(prompt_config)}
 
-                The client is waiting on a response from {prompt_config['full_name']}, and they can't continue work on our end until then. Importance Level: 8
-                This is an update on world news, covering news related to your industry. Importance Level: 2
-                Your payment for Digital Services has been received. Importance Level: 3
-                Here's your weekly overview of product usage for last Week! Importance Level: 2
-                Your payment is past due and we are about to suspend your account. Importance Level: 9
+                ### Example emails with importance level:
+
+                {get_example_evaluations(prompt_config)}
+
             """
         },
         {
@@ -29,6 +29,26 @@ def get_message_evaluation_prompt(prompt_config, message_content: str):
         }
     ]
 
+def get_company_clause(prompt_config):
+    """Returns a string with the company clause if the company name is defined."""
+    company_name = prompt_config.get("company_name", "")
+    if company_name:
+        return f"I work at {prompt_config['company_name']}, which is: {prompt_config['company_description']}"
+    return ""
+
+def get_rating_criteria_clause(prompt_config):
+    """Returns a string with the rating criteria clause if the rating criteria is defined."""
+    rating_criteria = prompt_config.get("rating_criteria", "")
+    if rating_criteria:
+        return f"Use the following criteria to determine the importance level: {prompt_config['rating_criteria']}"
+    return ""
+
+def get_example_evaluations(prompt_config):
+    """Returns a string with example evaluations if they are defined."""
+    example_evaluations = prompt_config.get("example_evaluations", [])
+    if example_evaluations:
+        return "\n".join([f"- {example}" for example in example_evaluations])
+    return ""
 
 def get_rating_extraction_prompt(prompt_config, evaluation_content: str):
     """Returns a prompt that asks the LLM to extract the numeric evaluation rating."""

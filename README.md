@@ -7,7 +7,7 @@ Configurable to use either a local LLM or an OpenAI API model.
 ## Getting started
 
 1. `cp .env.example .env`
-2. `cp prompt-config.example.json prompt-config.json`
+2. `cp prompt-config.example.json prompt-config-setup.json`
 3. Set up GMail API credentials, and place the credentials JSON in this directory named `credentials-gmail.json`.
 4. `pip install -r requirements.txt`
 5. `cd client && npm ci`

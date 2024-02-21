@@ -3,6 +3,14 @@
     "my_role": "Software Engineer with the Platforms team",
     "company_name": "Acme Logistics",
     "company_description": "A logistics company that moves a lot of freight in trucks, trains, planes, and boats.",
-    // "evaluator_model": "gpt-3.5-turbo"
-    "evaluator_model": "local"
+    "rating_critera": "Emails are more important if they are addressed to me and expecting a response. If the sender sounds upset or impatient, rate it higher",
+    "example_evaluations": [
+        "The client is waiting on a response from {prompt_config['full_name']}, and they can't continue work on our end until then. Importance Level: 8",
+        "This is an update on world news, covering news related to your industry. Importance Level: 2",
+        "Your payment for Digital Services has been received. Importance Level: 3",
+        "Here's your weekly overview of product usage for last Week! Importance Level: 3",
+        "Your payment is past due and we are about to suspend your account. Importance Level: 9"
+    ],
+    "evaluator_model": "gpt-3.5-turbo"
+    // "evaluator_model": "local"
 }

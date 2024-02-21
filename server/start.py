@@ -1,4 +1,5 @@
 import commentjson
+from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from evaluator.evaluator import evaluate_message_importance
@@ -32,7 +33,7 @@ def get_email_evaluations():
         })
 
     # Open the config file to get context and settings
-    with open('prompt-config.json', 'r') as file:
+    with open('prompt-config-setup.json', 'r') as file:
         prompt_config = commentjson.load(file)
 
     print(f'\n\n-------- Evaluating messages ({len(messages)}) --------\n')
@@ -54,6 +55,8 @@ def get_email_evaluations():
 
     print('\n\n-------- Finished evaluating messages --------\n')
 
+    sorted_evaluations = sorted(evaluations, key=lambda x: x['rating'], reverse=True)
+
     response = jsonify({
         'evaluations': [
             {
@@ -63,7 +66,7 @@ def get_email_evaluations():
                 "evaluatorResponse": eval['response'],
                 "model": eval['model'],
                 "receivedAt": eval['message']['receivedAt']
-            } for eval in evaluations
+            } for eval in sorted_evaluations
         ]
     })
     return response

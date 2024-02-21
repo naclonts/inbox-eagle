@@ -5,7 +5,7 @@ credentials.json
 credentials-gmail.json
 *.pickle
 __pycache__
-prompt-config.json
+prompt-config-setup*.json
 *evaluation-results*.csv*
 
 # Byte-compiled / optimized / DLL files

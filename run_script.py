@@ -13,7 +13,7 @@ def start():
         return
 
     # Open the config file to get context and settings
-    with open('prompt-config.json', 'r') as file:
+    with open('prompt-config-setup.json', 'r') as file:
         prompt_config = commentjson.load(file)
 
     print(f'\n\n-------- Evaluating messages ({len(messages)}) --------\n')
