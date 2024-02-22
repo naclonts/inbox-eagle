@@ -42,7 +42,7 @@ Message = TypedDict('Message', {
 })
 
 
-def list_unread_messages(num_days_to_include: int, email_type_filter: list[str]) -> list[Message]:
+def get_unread_messages(num_days_to_include: int, email_type_filter: list[str]) -> list[Message]:
     service = get_gmail_service()
 
     # Fetch unread inbox in the last N days

@@ -1,12 +1,12 @@
 from datetime import datetime
 from evaluator.evaluator import MessageEvaluation, evaluate_message_importance
-from mail_client.get_mail import list_unread_messages
+from mail_client.get_mail import get_unread_messages
 import commentjson
 
 
 def start():
     # get unread emails
-    messages = list_unread_messages(1, ['INBOX', 'UNREAD'])
+    messages = get_unread_messages(1, ['INBOX', 'UNREAD'])
 
     if not messages:
         print('\n\n- No unread messages found -\n\n')

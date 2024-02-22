@@ -1,63 +1,36 @@
-import commentjson
-from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+
 from evaluator.evaluator import evaluate_message_importance
 from evaluator.types import MessageEvaluation
-
-from mail_client.get_mail import list_unread_messages
+from mail_client.get_mail import get_unread_messages
+from server.utils import load_prompt_config, log_evaluation
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
-
 @app.route('/get-email-evaluations', methods=['POST'])
 def get_email_evaluations():
-    data = request.get_json()
+    prompt_config = load_prompt_config()
+    request_data = request.get_json()
+    num_days_to_include = request_data.get('numDaysToInclude', 3)
+    email_type_filter = request_data.get('emailTypeFilter', ['INBOX', 'UNREAD'])
 
-    # Extracting values from the JSON object
-    # TODO: use these parameters!
-    num_days_to_include = data.get('numDaysToInclude', 3)
-    email_type_filter = data.get('emailTypeFilter', ['INBOX', 'UNREAD'])
+    # Get the unread messages from Gmail
+    messages = get_unread_messages(num_days_to_include, email_type_filter)
 
-    # get unread emails
-    messages = list_unread_messages(num_days_to_include, email_type_filter)
-
-    if not messages:
-        print('\n\n- No unread messages found -\n\n')
-        return jsonify({
-            'evaluations': []
-        })
-
-    # Open the config file to get context and settings
-    with open('prompt-config-setup.json', 'r') as file:
-        prompt_config = commentjson.load(file)
-
-    print(f'\n\n-------- Evaluating messages ({len(messages)}) --------\n')
-
+    # Go through each message and get an evaluation
     evaluations: list[MessageEvaluation]  = []
-
     for message in messages:
-        # Print message headers in green
-        print('\033[92m' + f"Message ID: {message['id']} - Subject: {message['subject']}" + '\033[0m')
-        print(f"Snippet: {message['snippet']}")
-
         evaluation = evaluate_message_importance(prompt_config, message)
-        print(f'Rating: {evaluation["rating"]}')
-        print(f'Evaluation: {evaluation["response"]}')
-
-        print('\n----------------\n')
-
         evaluations.append(evaluation)
+        log_evaluation(message, evaluation)
 
-    print('\n\n-------- Finished evaluating messages --------\n')
-
+    # Sort evaluations to show the most important messages first
     sorted_evaluations = sorted(evaluations, key=lambda x: x['rating'], reverse=True)
 
-    response = jsonify({
+    # Return the messages and ratings to the front-end
+    return jsonify({
         'evaluations': [
             {
                 "rating": eval['rating'],
@@ -69,7 +42,6 @@ def get_email_evaluations():
             } for eval in sorted_evaluations
         ]
     })
-    return response
 
 
 def start_server():
