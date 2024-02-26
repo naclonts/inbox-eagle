@@ -14,21 +14,21 @@ Configurable to use either a local LLM or an OpenAI API model.
 
 ## Running the script
 
-Start by running the command line script to authorize Gmail and test the evaluation process:
+Run the command line script, which authorizes Gmail and runs the evaluation process:
 
 ```
 $ python run_script.py
 ```
 
-This'll save your credentials to a token.pickle file locally.
+This will save your Gmail credentials to a token.pickle file locally.
 
-Next run the server and the front-end:
+Run the server:
 
 ```sh
 $ python start.py
 ```
 
-Front-end client:
+Run the front-end client:
 
 ```sh
 $ cd client
@@ -37,13 +37,13 @@ $ npm start
 
 ## Screenshots
 
-Here's the web UI running locally:
+Web UI:
 
 ![image](https://github.com/naclonts/inbox-eagle/assets/10605105/a8ac0c3a-55f9-4866-b155-ce5e6d891ea6)
 
 
 
-Here's some output from running `run_script.py` via the command line: 
+Output from `run_script.py` command line script: 
 
 ```
 -------- Evaluating messages (2) --------
