@@ -11,6 +11,7 @@ import pickle
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']  # Allows reading and modifying but not deleting emails
 
 def get_gmail_service():
+    """Returns the Gmail API service, while caching the tokens to a pickle file."""
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -43,6 +44,7 @@ Message = TypedDict('Message', {
 
 
 def get_unread_messages(num_days_to_include: int, email_type_filter: list[str]) -> list[Message]:
+    """Returns unread messages from Gmail that were received within the last N days."""
     service = get_gmail_service()
 
     # Fetch unread inbox in the last N days
@@ -59,6 +61,12 @@ def get_unread_messages(num_days_to_include: int, email_type_filter: list[str]) 
 
 
 def get_decoded_message(service, user_id, msg_id) -> Message:
+    """
+    Given a message ID, this returns a text version of the message.
+
+    Note that this function currently doesn't always handle threads correctly -- could
+    use some improvements here!
+    """
     message = service.users().messages().get(userId=user_id, id=msg_id, format='full').execute()
 
     # Check if the message is multipart

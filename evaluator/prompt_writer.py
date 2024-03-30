@@ -3,7 +3,6 @@ def get_message_evaluation_prompt(prompt_config, message_content: str):
     """
     Returns a prompt with a series of messages with role + content.
     """
-
     return [
         {
             "role": "system",
@@ -29,29 +28,8 @@ def get_message_evaluation_prompt(prompt_config, message_content: str):
         }
     ]
 
-def get_company_clause(prompt_config):
-    """Returns a string with the company clause if the company name is defined."""
-    company_name = prompt_config.get("company_name", "")
-    if company_name:
-        return f"I work at {prompt_config['company_name']}, which is: {prompt_config['company_description']}"
-    return ""
-
-def get_rating_criteria_clause(prompt_config):
-    """Returns a string with the rating criteria clause if the rating criteria is defined."""
-    rating_criteria = prompt_config.get("rating_criteria", "")
-    if rating_criteria:
-        return f"Use the following criteria to determine the importance level: {prompt_config['rating_criteria']}"
-    return ""
-
-def get_example_evaluations(prompt_config):
-    """Returns a string with example evaluations if they are defined."""
-    example_evaluations = prompt_config.get("example_evaluations", [])
-    if example_evaluations:
-        return "\n".join([f"- {example}" for example in example_evaluations])
-    return ""
-
 def get_rating_extraction_prompt(prompt_config, evaluation_content: str):
-    """Returns a prompt that asks the LLM to extract the numeric evaluation rating."""
+    """Returns a prompt that asks the LLM to extract the numeric evaluation rating from a text evaluation."""
     return [
         {
             "role": "system",
@@ -68,3 +46,24 @@ def get_rating_extraction_prompt(prompt_config, evaluation_content: str):
             "content": evaluation_content,
         }
     ]
+
+def get_company_clause(prompt_config):
+    """Returns a string with the company clause, if the company name is defined in the prompt config."""
+    company_name = prompt_config.get("company_name", "")
+    if company_name:
+        return f"I work at {prompt_config['company_name']}, which is: {prompt_config['company_description']}"
+    return ""
+
+def get_rating_criteria_clause(prompt_config):
+    """Returns a string with the rating criteria clause, if the rating criteria is defined in the prompt config."""
+    rating_criteria = prompt_config.get("rating_criteria", "")
+    if rating_criteria:
+        return f"Use the following criteria to determine the importance level: {prompt_config['rating_criteria']}"
+    return ""
+
+def get_example_evaluations(prompt_config):
+    """Returns a string with example evaluations, if they are defined in the prompt config."""
+    example_evaluations = prompt_config.get("example_evaluations", [])
+    if example_evaluations:
+        return "\n".join([f"- {example}" for example in example_evaluations])
+    return ""

@@ -6,8 +6,11 @@ from evaluator.types import MessageEvaluation
 
 from llm_api.api import get_llm_response
 
-
 def evaluate_message_importance(prompt_config, message: Message) -> MessageEvaluation:
+    """
+    Accepts a message and returns an evaluation of its importance, including a numerical rating
+    and a text explanation of the rating.
+    """
     # limit the message to the first and last 2000 characters
     trimmed_content = message['body'][:2000] + '\n...\n' + message['body'][-2000:] + '\n...\nSnippet: ' + message['snippet']
     prompt = prompt_writer.get_message_evaluation_prompt(prompt_config, trimmed_content)
@@ -22,5 +25,3 @@ def evaluate_message_importance(prompt_config, message: Message) -> MessageEvalu
         response=response,
         model=prompt_config['evaluator_model'],
     )
-
-

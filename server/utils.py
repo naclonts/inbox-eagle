@@ -1,6 +1,7 @@
 import commentjson
 
 def log_evaluation(message, evaluation):
+    """Log an evaluation and message snippet to the console."""
     print('\033[92m' + f"Message ID: {message['id']} - Subject: {message['subject']}" + '\033[0m')
     print(f"Snippet: {message['snippet']}")
     print(f'Rating: {evaluation["rating"]}')

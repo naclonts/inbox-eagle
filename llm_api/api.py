@@ -6,8 +6,8 @@ load_dotenv('.env')
 
 openai.api_key = os.environ['OPENAI_API_KEY']
 
-
 def get_llm_response(prompt_config, prompt) -> str:
+    """Returns a response from the language model based on the given prompt."""
     if prompt_config['evaluator_model'] == 'local':
         completion = get_local_llm_response(prompt_config, prompt)
     elif prompt_config['evaluator_model'][0:3] == 'gpt':
@@ -19,6 +19,10 @@ def get_llm_response(prompt_config, prompt) -> str:
     return response
 
 def get_local_llm_response(prompt_config, prompt):
+    """
+    Returns a response from a local language model using the OpenAI API format
+    at port 5000 (e.g., Oobabooga).
+    """
     response = requests.post(
         'http://localhost:5000/v1/chat/completions',
         headers={
@@ -26,7 +30,7 @@ def get_local_llm_response(prompt_config, prompt):
         },
         json={
             "mode": "instruct",
-            "instruction_template": "Alpaca", # not sure what this does...
+            "instruction_template": "Alpaca",
             "messages": prompt,
         },
     )
