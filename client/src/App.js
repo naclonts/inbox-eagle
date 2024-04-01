@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { ClipLoader } from 'react-spinners'; // Using react-spinners for the loading indicator
+import { ClipLoader } from 'react-spinners';
 
-import './index.css'; // This is the CSS file you'll create for styling
+import './index.css';
 
 const InboxEagle = () => {
   const [days, setDays] = useState(2);
-  // emailEvaluations contains objects with the properties: receivedAt, rating, subject, evaluatorResponse, snippet
   const [emailEvaluations, setEmailEvaluations] = useState([]);
   const [isLoadingEmailEvaluations, setIsLoadingEmailEvaluations] = useState(false);
 
@@ -66,6 +65,7 @@ const InboxEagle = () => {
                 <tr>
                   <th>Rating</th>
                   <th>Received date</th>
+                  <th>From</th>
                   <th>Subject</th>
                   <th>Snippet</th>
                   <th>Evaluation</th>
@@ -77,6 +77,7 @@ const InboxEagle = () => {
                   <tr key={index}>
                     <td>{evaluation.rating}</td>
                     <td>{evaluation.receivedAt ? new Date(Number(evaluation.receivedAt)).toLocaleDateString() : ''}</td>
+                    <td>{(evaluation.from || '').split('<')[0].trim()}</td>
                     <td>{evaluation.subject}</td>
                     <td>{evaluation.snippet}</td>
                     <td>{evaluation.evaluatorResponse}</td>

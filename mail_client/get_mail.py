@@ -36,6 +36,7 @@ def get_gmail_service():
 
 Message = TypedDict('Message', {
     'body': str,
+    'from': str,
     'snippet': str,
     'id': str,
     'subject': str,
@@ -94,6 +95,7 @@ def get_decoded_message(service, user_id, msg_id) -> Message:
     return {
         'body': body,
         'snippet': message['snippet'],
+        'from': [i['value'] for i in headers if i["name"]=="From"][0],
         'id': message['id'],
         'subject': subject or '',
         'receivedAt': message['internalDate']

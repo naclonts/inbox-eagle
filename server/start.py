@@ -11,16 +11,16 @@ CORS(app)
 
 @app.route('/get-email-evaluations', methods=['POST'])
 def get_email_evaluations():
-    prompt_config = load_prompt_config()
     request_data = request.get_json()
     num_days_to_include = request_data.get('numDaysToInclude', 3)
     email_type_filter = request_data.get('emailTypeFilter', ['INBOX', 'UNREAD'])
 
-    # Get the unread messages from Gmail
+    # Fetch the unread messages from Gmail
     messages = get_unread_messages(num_days_to_include, email_type_filter)
 
-    # Go through each message and get an evaluation
-    evaluations: list[MessageEvaluation]  = []
+    # For each message, evaluate its importance with the LLM
+    evaluations: list[MessageEvaluation] = []
+    prompt_config = load_prompt_config()
     for message in messages:
         evaluation = evaluate_message_importance(prompt_config, message)
         evaluations.append(evaluation)
@@ -34,6 +34,7 @@ def get_email_evaluations():
         'evaluations': [
             {
                 "rating": eval['rating'],
+                "from": eval['message']['from'],
                 "subject": eval['message']['subject'],
                 "snippet": eval['message']['snippet'],
                 "evaluatorResponse": eval['response'],

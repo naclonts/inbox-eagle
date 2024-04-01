@@ -24,7 +24,13 @@ def get_message_evaluation_prompt(prompt_config, message_content: str):
         },
         {
             "role": "user",
-            "content": message_content,
+            "content": f"""
+            Evaluate the following email and then rate its importance on a scale of 1 to 10:
+
+            <email>
+            {message_content}
+            </email>
+            """,
         }
     ]
 
@@ -38,12 +44,17 @@ def get_rating_extraction_prompt(prompt_config, evaluation_content: str):
                 Return only the number, and do not add any text, words, or punctuation.
 
                 Example input: This message is fairly important, so I assigned it an 7.0 importance level.
-                Example responses: 7.0
+                Example responses: 7
             """
         },
         {
-            "role": "user",
-            "content": evaluation_content,
+            "role": "user","content": f"""
+            Extract the numeric importance level from the following evaluation, and return only a single number:
+
+            <evaluation>
+            {evaluation_content}
+            </evaluation>
+            """,
         }
     ]
 
