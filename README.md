@@ -16,7 +16,7 @@ Configurable to use either a local LLM or an OpenAI API model.
 
 Run the command line script, which authorizes Gmail and runs the evaluation process:
 
-```
+```sh
 $ python run_script.py
 ```
 
