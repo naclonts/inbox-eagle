@@ -4,6 +4,8 @@ An app that queries your unread emails and ranks them in importance based on whi
 
 Configurable to use either a local LLM or an OpenAI API model.
 
+Check out [this article](https://nathanclonts.com/prioritizing-your-email-inbox-with-ai/) for a walkthrough of the application in more depth.
+
 ## Getting started
 
 1. `cp .env.example .env`
@@ -67,5 +69,18 @@ Rating: 2.0
 Evaluation: Interesting patent. No urgent response necessary. Importance Level: 2
 ```
 
+## Architecture
 
+![application-flowchart](https://github.com/naclonts/inbox-eagle/assets/10605105/21c04177-d746-4e89-899f-412a78174f9b)
 
+- Web frontend
+    - User clicks Evaluate emails to contact the Python server
+- Python server
+    - ✉️ Fetch emails via the Gmail API
+    - 🔁 For each email:
+        - ✍️ Compose a prompt to the LLM based on the user's personalized configuration
+        - 🧠 Query the LLM (twice)
+            - First, we ask for a written evaluation of the email's importance, including a score on a scale of 1 to 10
+            - Second, we ask the LLM to extract the numeric score from the written evaluation
+- Web frontend
+    - Display the results of the evaluation!
