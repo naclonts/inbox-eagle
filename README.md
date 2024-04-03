@@ -8,9 +8,15 @@ Configurable to use either a local LLM or an OpenAI API model.
 
 1. `cp .env.example .env`
 2. `cp prompt-config.example.json prompt-config-setup.json`
-3. Set up GMail API credentials, and place the credentials JSON in this directory named `credentials-gmail.json`.
+3. Set up Gmail API credentials
+    - You can create access credentials via the [Gmail Cloud console API page](https://console.cloud.google.com/apis/library/gmail.googleapis.com)
+    - Enable the following scope: `https://www.googleapis.com/auth/gmail.modify`
+    - Set the application type to "Web Application"
+    - Add an Authorized Redirect URI of: `http://localhost:33339/`
+    - Download the Gmail credentials JSON file
+4. Place the Gmail credentials JSON in this directory named `credentials-gmail.json`.
 4. `pip install -r requirements.txt`
-5. `cd client && npm ci`
+5. `cd client && npm install`
 
 ## Running the script
 
@@ -43,7 +49,7 @@ Web UI:
 
 
 
-Output from `run_script.py` command line script: 
+Output from `run_script.py` command line script:
 
 ```
 -------- Evaluating messages (2) --------
