@@ -24,7 +24,7 @@ Check out [this article](https://nathanclonts.com/prioritizing-your-email-inbox-
 
 Run the command line script, which authorizes Gmail and runs the evaluation process:
 
-```
+```sh
 $ python run_script.py
 ```
 
